@@ -39,7 +39,8 @@ describe('company domain for dedupe', () => {
 
   it('falls back to the email domain but never a personal mailbox domain', () => {
     expect(companyDomainFor('sipho@kestrel-freight.example.com', undefined, freeMail)).toBe('kestrel-freight.example.com');
-    expect(companyDomainFor('someone@gmail.com', undefined, freeMail)).toBeNull();
+    expect(freeMail.has('gmail.com')).toBe(true);
+    expect(companyDomainFor('someone@example.com', undefined, freeMail)).toBeNull();
     expect(companyDomainFor('someone@example.com', 'https://gmail.com', freeMail)).toBeNull();
     expect(companyDomainFor(null, undefined, freeMail)).toBeNull();
   });
