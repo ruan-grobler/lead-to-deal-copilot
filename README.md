@@ -117,7 +117,7 @@ CI (`.github/workflows/ci.yml`) runs lint, typecheck, the tests with coverage th
 
 ## Live mode
 
-`MODE=live` uses real Slack (Bolt in Socket Mode, so no public URL is needed for Slack) and a real HubSpot free CRM. Claude is optional: without `ANTHROPIC_API_KEY` every lead goes through the rules to human review. Setup is in [`PUBLISH.md`](PUBLISH.md), with the Slack app manifest in [`slack-app-manifest.yml`](slack-app-manifest.yml) and every setting in [`.env.example`](.env.example). The `Dockerfile` builds a live mode image.
+`MODE=live` uses real Slack (Bolt in Socket Mode, so no public URL is needed for Slack) and a real HubSpot free CRM. Claude is optional: without `ANTHROPIC_API_KEY` every lead goes through the rules to human review. Setup is in [`docs/live-setup.md`](docs/live-setup.md), with the Slack app manifest in [`slack-app-manifest.yml`](slack-app-manifest.yml) and every setting in [`.env.example`](.env.example). The `Dockerfile` builds a live mode image.
 
 Live mode is written against the real SDKs but has not yet been run against a real Slack workspace or HubSpot portal.
 

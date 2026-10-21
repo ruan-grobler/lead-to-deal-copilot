@@ -1,24 +1,10 @@
-# Publishing checklist
+# Live setup
 
-Nothing here has been pushed or published. The repo exists only on this machine.
-
-## GitHub
-
-**Description (one line):**
-Inbound leads from a web form, email or Slack become deduplicated HubSpot deals that a person approves in Slack with one click. Claude extraction with fallbacks, retries, idempotency and a dead letter replay.
-
-**Topics:**
-`hubspot` `slack` `slack-bolt` `claude` `anthropic` `crm-automation` `sales-automation` `lead-management` `structured-outputs` `idempotency` `dead-letter-queue` `typescript` `nodejs` `vitest` `msw`
-
-**To publish (after Ruan's go):** create the GitHub repo, push `main`, and check that the CI workflow (lint, typecheck, tests with coverage, demo, Docker build) goes green on the first run. CI has not run yet, because it only runs once the repo is on GitHub.
-
-## Live demo: what Ruan must create
-
-The demo needs no accounts. These steps are only for a live run. Use synthetic leads in live mode too.
+The demo and tests need no accounts. These steps are only for a live run against real Slack and HubSpot. Use synthetic leads in live mode too.
 
 ### 1. Slack app (free workspace is fine)
 
-1. Go to https://api.slack.com/apps, choose **Create New App**, then **From a manifest**, pick the workspace and paste [`slack-app-manifest.yml`](slack-app-manifest.yml).
+1. Go to https://api.slack.com/apps, choose **Create New App**, then **From a manifest**, pick the workspace and paste [`slack-app-manifest.yml`](../slack-app-manifest.yml).
 2. **Install to Workspace**. Copy the **Bot User OAuth Token** from **OAuth & Permissions** into `SLACK_BOT_TOKEN`.
 3. In **Basic Information**, under **App-Level Tokens**, generate a token with the `connections:write` scope (Socket Mode needs it). Copy it into `SLACK_APP_TOKEN`.
 4. Create the channels `#sales`, `#support` and `#sales-ops` (or set other names in `.env`). Invite the bot to each with `/invite @Lead Copilot`, and to any channel where you will use the shortcut.

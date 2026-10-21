@@ -8,7 +8,7 @@ import { nextDailyRun } from './scheduler/time.ts';
 /**
  * `npm start`. MODE=mock (the default) keeps everything on this machine:
  * HubSpot and Slack are answered in-process. MODE=live talks to the real
- * services with the tokens from .env (see PUBLISH.md).
+ * services with the tokens from .env (see docs/live-setup.md).
  */
 const main = async (): Promise<void> => {
   const config = loadConfig();

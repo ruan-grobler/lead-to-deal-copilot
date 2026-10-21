@@ -112,7 +112,7 @@ export const loadConfig = (env: NodeJS.ProcessEnv = process.env): AppConfig => {
   if (e.MODE === 'live') {
     const missing = (['HUBSPOT_ACCESS_TOKEN', 'SLACK_BOT_TOKEN', 'SLACK_APP_TOKEN'] as const).filter((key) => e[key] === undefined);
     if (missing.length > 0) {
-      throw new ConfigError(`MODE=live needs ${missing.join(', ')}. See .env.example and PUBLISH.md.`);
+      throw new ConfigError(`MODE=live needs ${missing.join(', ')}. See .env.example and docs/live-setup.md.`);
     }
   }
   if (!isValidTimeZone(e.DIGEST_TIMEZONE)) {
