@@ -9,7 +9,7 @@ import { bootstrapCli, print } from './bootstrap.ts';
  */
 const main = async (): Promise<void> => {
   const { values } = parseArgs({ options: { list: { type: 'boolean', default: false }, id: { type: 'string' } } });
-  const cli = bootstrapCli();
+  const cli = await bootstrapCli();
   try {
     const pending = cli.runtime.repo.listDeadLetters({ pendingOnly: true });
     if (values.list) {

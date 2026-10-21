@@ -1,0 +1,12 @@
+node_modules
+coverage
+.data
+.env
+.env.*
+.git
+.github
+docs
+test
+demo
+fixtures
+*.md

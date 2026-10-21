@@ -1,0 +1,230 @@
+
+ RUN  v5.0.3 /Users/admin/Code/lead-to-deal-copilot
+      Coverage enabled with v8
+
+ ✓ test/integration/claude.test.ts > Claude extractor against the mocked Messages API > sends a structured output request with server side fallback and low effort, and parses the reply 51ms
+ ✓ test/integration/claude.test.ts > Claude extractor against the mocked Messages API > wraps the lead in tags it cannot close 5ms
+ ✓ test/integration/claude.test.ts > Claude extractor against the mocked Messages API > reports a reply that does not match the schema as invalid_output 10ms
+ ✓ test/integration/claude.test.ts > Claude extractor against the mocked Messages API > reports valid JSON with the wrong shape as invalid_output 5ms
+ ✓ test/integration/claude.test.ts > Claude extractor against the mocked Messages API > retries an overloaded API once, then reports api_error 9ms
+ ✓ test/integration/claude.test.ts > Claude extractor against the mocked Messages API > does not retry a 400 5ms
+ ✓ test/integration/entrypoints.test.ts > entrypoints in mock mode > npm start serves health and a webhook, then shuts down cleanly on SIGTERM 1412ms
+ ✓ test/integration/claude.test.ts > Claude extractor against the mocked Messages API > times out instead of hanging 204ms
+ ✓ test/integration/http.test.ts > HTTP server > reports health 161ms
+ ✓ test/integration/claude.test.ts > Claude extractor against the mocked Messages API > reports a safety refusal 1ms
+ ✓ test/integration/slack-app.test.ts > Slack app through Bolt > turns a message into a lead with the shortcut, once 272ms
+ ✓ test/integration/slack-app.test.ts > Slack app through Bolt > Approve moves the deal stage and updates the card, and a second approve is refused 48ms
+ ✓ test/integration/pipeline.test.ts > lead pipeline end to end against the mocks > turns a clean lead into a contact, company, deal and note, all associated, plus a Slack card 317ms
+ ✓ test/integration/pipeline.test.ts > lead pipeline end to end against the mocks > never creates a second deal for a replayed message 60ms
+ ✓ test/integration/scheduled.test.ts > reminders and the daily digest > reminds once on a card nobody touched for two hours 288ms
+ ✓ test/integration/scheduled.test.ts > reminders and the daily digest > counts a failed reminder and tries again on the next sweep 33ms
+ ✓ test/integration/scheduled.test.ts > reminders and the daily digest > posts the digest from 08:00 Africa/Johannesburg, once per day 28ms
+ ✓ test/integration/scheduled.test.ts > reminders and the daily digest > releases the day when posting fails, so the next tick retries 23ms
+ ✓ test/integration/http.test.ts > HTTP server > accepts a signed form lead with 202, processes it, and answers a replay with 200 214ms
+ ✓ test/integration/http.test.ts > HTTP server > rejects unsigned or tampered requests when a secret is set 28ms
+ ✓ test/integration/scheduled.test.ts > reminders and the daily digest > builds digest numbers from the last 24 hours 90ms
+ ✓ test/integration/slack-app.test.ts > Slack app through Bolt > Not a fit closes the deal 57ms
+ ✓ test/integration/slack-app.test.ts > Slack app through Bolt > Assign to me sets the HubSpot owner by Slack email, and only one person can hold it 59ms
+ ✓ test/integration/pipeline.test.ts > lead pipeline end to end against the mocks > merges a second message from the same person into the open deal 88ms
+ ✓ test/integration/pipeline.test.ts > lead pipeline end to end against the mocks > merges a colleague from the same company domain and adds them to the deal 57ms
+ ✓ test/integration/http.test.ts > HTTP server > validates the request 79ms
+ ✓ test/integration/http.test.ts > HTTP server > accepts raw and JSON wrapped emails 53ms
+ ✓ test/integration/http.test.ts > HTTP server > answers unknown routes and wrong methods 14ms
+ ✓ test/integration/http.test.ts > HTTP server > reports degraded health when the database is gone 8ms
+ ✓ test/integration/slack-app.test.ts > Slack app through Bolt > Assign explains when the Slack user has no HubSpot owner 51ms
+ ✓ test/integration/pipeline.test.ts > lead pipeline end to end against the mocks > opens a new deal when the only earlier deal is closed, and fills gaps without overwriting 64ms
+ ✓ test/integration/pipeline.test.ts > lead pipeline end to end against the mocks > sends an AI failure to human review without touching HubSpot 11ms
+ ✓ test/integration/pipeline.test.ts > lead pipeline end to end against the mocks > filters spam and routes support without creating deals 6ms
+ ✓ test/integration/pipeline.test.ts > lead pipeline end to end against the mocks > dead letters a lead after a 429 storm, alerts, and the replay finishes it once 31ms
+ ✓ test/integration/pipeline.test.ts > lead pipeline end to end against the mocks > resumes from the checkpoint after a failure half way, so the replay creates no duplicates 31ms
+ ✓ test/integration/pipeline.test.ts > lead pipeline end to end against the mocks > dead letters when Slack is down after HubSpot succeeded, and the replay only posts the card 31ms
+ ✓ test/integration/pipeline.test.ts > lead pipeline end to end against the mocks > a replay that fails again stays visible as a new dead letter 47ms
+ ✓ test/integration/pipeline.test.ts > lead pipeline end to end against the mocks > still records the dead letter when the alert itself cannot be sent 30ms
+ ✓ test/integration/pipeline.test.ts > lead pipeline end to end against the mocks > retries a Slack rate limit, honouring Retry-After 21ms
+ ✓ test/integration/entrypoints.test.ts > entrypoints in mock mode > npm start refuses live mode without tokens 627ms
+ ✓ test/integration/pipeline.test.ts > lead pipeline end to end against the mocks > serialises concurrent leads for the same company, so they cannot race into two deals 18ms
+ ✓ test/integration/pipeline.test.ts > lead pipeline end to end against the mocks > recovers after a crash: requeues leads that never started, dead letters ones that stopped half way 18ms
+ ✓ test/integration/pipeline.test.ts > AI switched off > routes every lead to review through the rules when there is no API key 3ms
+ ✓ test/unit/infrastructure.test.ts > config > defaults to mock mode with safe values 26ms
+ ✓ test/unit/infrastructure.test.ts > config > treats empty values as unset and extends the free mail list 2ms
+ ✓ test/unit/infrastructure.test.ts > config > refuses live mode without tokens, and bad values 2ms
+ ✓ test/unit/infrastructure.test.ts > logger > writes one JSON object per line with bindings, and respects the level 1ms
+ ✓ test/unit/infrastructure.test.ts > logger > masks contact details 0ms
+ ✓ test/unit/infrastructure.test.ts > concurrency helpers > runs tasks with the same key one after the other, other keys in parallel 22ms
+ ✓ test/unit/infrastructure.test.ts > concurrency helpers > releases the lock when a task throws 2ms
+ ✓ test/unit/infrastructure.test.ts > concurrency helpers > queues jobs with a concurrency limit and reports errors without stopping 21ms
+ ✓ test/unit/infrastructure.test.ts > concurrency helpers > runs scheduled tasks, skips overlapping ticks and survives a failing task 9ms
+ ✓ test/unit/infrastructure.test.ts > concurrency helpers > has a controllable fake clock and counters 1ms
+ ✓ test/unit/retry.test.ts > backoff > uses full jitter under an exponential ceiling, capped at maxDelayMs 2ms
+ ✓ test/unit/retry.test.ts > backoff > has a reproducible seeded random source 1ms
+ ✓ test/unit/retry.test.ts > withRetry > retries 429 and 5xx, then succeeds 14ms
+ ✓ test/unit/retry.test.ts > withRetry > honours Retry-After when it is longer than the jittered delay 0ms
+ ✓ test/unit/retry.test.ts > withRetry > gives up straight away on a 4xx and reports one attempt 1ms
+ ✓ test/unit/retry.test.ts > withRetry > stops after maxAttempts and keeps the last error as the cause 0ms
+ ✓ test/unit/retry.test.ts > withRetry > does not wait out an absurd Retry-After, it fails so the lead can be dead lettered 0ms
+ ✓ test/unit/retry.test.ts > withRetry > retries timeouts only when the policy says so 0ms
+ ✓ test/unit/retry.test.ts > withRetry > exposes the policy on a runner 0ms
+ ✓ test/unit/retry.test.ts > inspectError understands every SDK > reads Anthropic errors 1ms
+ ✓ test/unit/retry.test.ts > inspectError understands every SDK > reads Slack errors 0ms
+ ✓ test/unit/retry.test.ts > inspectError understands every SDK > reads HubSpot, fetch and unknown errors 0ms
+ ✓ test/unit/retry.test.ts > inspectError understands every SDK > parses Retry-After as seconds or a date 0ms
+ ✓ test/unit/retry.test.ts > inspectError understands every SDK > classifies retryable errors 0ms
+ ✓ test/integration/slack-app.test.ts > Slack app through Bolt > approving a reviewed lead creates the records only then, at the approved stage, owned by the assignee 325ms
+ ✓ test/integration/slack-app.test.ts > Slack app through Bolt > undoes the decision when HubSpot rejects the stage change, so it can be retried 65ms
+ ✓ test/integration/slack-app.test.ts > Slack app through Bolt > answers clicks on unknown or finished leads politely, and ignores malformed actions 14ms
+ ✓ test/integration/hubspot.test.ts > HubSpot gateway against the mocked CRM API > finds contacts by email and companies by domain through the search API 29ms
+ ✓ test/integration/hubspot.test.ts > HubSpot gateway against the mocked CRM API > creates, updates and associates records, and reads open deals back 108ms
+ ✓ test/unit/rules.test.ts > budget parsing > reads rand amounts in the usual South African formats 5ms
+ ✓ test/unit/rules.test.ts > budget parsing > annualises monthly amounts and keeps the largest figure 0ms
+ ✓ test/unit/rules.test.ts > budget parsing > maps amounts to bands 0ms
+ ✓ test/unit/rules.test.ts > urgency, intent and names > detects urgency from wording 2ms
+ ✓ test/unit/rules.test.ts > urgency, intent and names > spots spam, junk and support 6ms
+ ✓ test/unit/rules.test.ts > urgency, intent and names > finds a name in a sign off 1ms
+ ✓ test/unit/rules.test.ts > extractWithRules > trusts structured hints over guesses 1ms
+ ✓ test/unit/rules.test.ts > extractWithRules > falls back to the text when there are no hints 0ms
+ ✓ test/unit/rules.test.ts > extractWithRules > returns null with zero confidence when nothing is found 0ms
+ ✓ test/unit/time.test.ts > time zone helpers > reads wall clock time in Cape Town (UTC+2, no daylight saving) 15ms
+ ✓ test/unit/time.test.ts > time zone helpers > converts a local wall clock time to UTC 1ms
+ ✓ test/unit/time.test.ts > time zone helpers > schedules the next 08:00 run in Africa/Johannesburg 0ms
+ ✓ test/unit/time.test.ts > time zone helpers > knows when the daily run is due 0ms
+ ✓ test/unit/time.test.ts > time zone helpers > formats durations 0ms
+ ✓ test/unit/sources.test.ts > email source > parses a clean message into a lead with sender hints 5ms
+ ✓ test/unit/sources.test.ts > email source > drops the quoted history of a reply 1ms
+ ✓ test/unit/sources.test.ts > email source > keeps a malformed message as a lead with warnings instead of failing 1ms
+ ✓ test/unit/sources.test.ts > email source > reads HTML only messages 1ms
+ ✓ test/unit/sources.test.ts > email source > survives input that is not a MIME message at all 0ms
+ ✓ test/unit/sources.test.ts > email source > flags an empty body 0ms
+ ✓ test/unit/sources.test.ts > email source > prefers a valid Reply-To over the From address 0ms
+ ✓ test/unit/sources.test.ts > email source > strips quoted replies in Outlook style too 0ms
+ ✓ test/unit/sources.test.ts > form source > requires a message but nothing else 2ms
+ ✓ test/unit/sources.test.ts > form source > keeps a lead with a broken email field and flags it 1ms
+ ✓ test/unit/sources.test.ts > form source > normalises contact fields into hints 0ms
+ ✓ test/unit/sources.test.ts > slack source > keys the lead on workspace, channel and message ts 0ms
+ ✓ test/unit/sources.test.ts > webhook signatures > accepts a correct HMAC and rejects anything else 0ms
+ ✓ test/integration/hubspot.test.ts > HubSpot gateway against the mocked CRM API > ignores open deals created before the merge window 9ms
+ ✓ test/integration/hubspot.test.ts > HubSpot gateway against the mocked CRM API > turns a 409 duplicate contact into the existing id 1ms
+ ✓ test/integration/hubspot.test.ts > HubSpot gateway against the mocked CRM API > retries 429 and 5xx with backoff, then succeeds 9ms
+ ✓ test/integration/hubspot.test.ts > HubSpot gateway against the mocked CRM API > gives up after the retry budget and says where it failed 22ms
+ ✓ test/integration/hubspot.test.ts > HubSpot gateway against the mocked CRM API > does not retry a 404 2ms
+ ✓ test/integration/hubspot.test.ts > HubSpot gateway against the mocked CRM API > rejects calls without a token, like HubSpot does 6ms
+ ✓ test/integration/hubspot.test.ts > HubSpot gateway against the mocked CRM API > looks up owners by email 35ms
+ ✓ test/integration/hubspot.test.ts > HubSpot gateway against the mocked CRM API > builds deal links only when the portal id is known 0ms
+ ✓ test/unit/idempotency.test.ts > idempotency keys > uses the form provider submission id when there is one 2ms
+ ✓ test/unit/idempotency.test.ts > idempotency keys > hashes the payload otherwise, independent of key order 1ms
+ ✓ test/unit/idempotency.test.ts > idempotency keys > uses the Message-ID for email, normalised 0ms
+ ✓ test/unit/idempotency.test.ts > idempotency keys > hashes the raw message when there is no Message-ID 0ms
+ ✓ test/unit/idempotency.test.ts > idempotency keys > identifies a Slack message by workspace, channel and ts 0ms
+ ✓ test/unit/idempotency.test.ts > idempotency keys > serialises JSON canonically 0ms
+ ✓ test/unit/normalize.test.ts > email normalisation > lower cases and strips mailto and angle brackets 2ms
+ ✓ test/unit/normalize.test.ts > email normalisation > rejects things that are not addresses 1ms
+ ✓ test/unit/normalize.test.ts > company domain for dedupe > prefers the website host and strips www 1ms
+ ✓ test/unit/normalize.test.ts > company domain for dedupe > falls back to the email domain but never a personal mailbox domain 0ms
+ ✓ test/unit/normalize.test.ts > phone normalisation > turns South African formats into E.164 0ms
+ ✓ test/unit/normalize.test.ts > phone normalisation > keeps other international numbers and rejects junk 0ms
+ ✓ test/unit/normalize.test.ts > names and text > splits a full name 1ms
+ ✓ test/unit/normalize.test.ts > names and text > guesses a company name from a domain 0ms
+ ✓ test/unit/normalize.test.ts > names and text > truncates on a word boundary 0ms
+ ✓ test/unit/repository.test.ts > repository > migrates once and records the schema version 3ms
+ ✓ test/unit/repository.test.ts > repository > claims a lead once per idempotency key 5ms
+ ✓ test/unit/repository.test.ts > repository > round trips the decision and CRM checkpoints 3ms
+ ✓ test/unit/repository.test.ts > repository > dead letters a lead and tracks replays 3ms
+ ✓ test/unit/repository.test.ts > repository > lets only one person decide a lead 2ms
+ ✓ test/unit/repository.test.ts > repository > assigns once, and the same person may click again 2ms
+ ✓ test/unit/repository.test.ts > repository > finds untouched cards for reminders 6ms
+ ✓ test/unit/repository.test.ts > repository > claims a digest date once and can release a failed claim 3ms
+ ✓ test/unit/repository.test.ts > repository > lists interrupted and recent leads 4ms
+ ✓ test/unit/repository.test.ts > repository > creates the database file and folder on disk 15ms
+ ✓ test/unit/blocks.test.ts > lead card > shows the extracted fields, a deal link and three buttons 3ms
+ ✓ test/unit/blocks.test.ts > lead card > marks priority leads and mentions the sales lead 0ms
+ ✓ test/unit/blocks.test.ts > lead card > explains why a lead needs review and flags low confidence fields 0ms
+ ✓ test/unit/blocks.test.ts > lead card > replaces the buttons with the decision once someone acts 0ms
+ ✓ test/unit/blocks.test.ts > lead card > never lets lead text create mentions or links 0ms
+ ✓ test/unit/blocks.test.ts > lead card > refuses to render a lead without an extraction 1ms
+ ✓ test/unit/blocks.test.ts > lead card > shows a plain deal number without a portal id 0ms
+ ✓ test/unit/blocks.test.ts > other messages > builds merge, support, reminder, digest and alert messages 1ms
+ ✓ test/unit/extract.test.ts > extraction with fallback > uses Claude when it answers confidently, and routes to auto draft 5ms
+ ✓ test/unit/extract.test.ts > extraction with fallback > falls back to rules on timeout and sends the lead to review 1ms
+ ✓ test/unit/extract.test.ts > extraction with fallback > falls back to rules on api_error and sends the lead to review 0ms
+ ✓ test/unit/extract.test.ts > extraction with fallback > falls back to rules on invalid_output and sends the lead to review 0ms
+ ✓ test/unit/extract.test.ts > extraction with fallback > falls back to rules on refusal and sends the lead to review 0ms
+ ✓ test/unit/extract.test.ts > extraction with fallback > runs on rules alone when no API key is configured 0ms
+ ✓ test/unit/extract.test.ts > extraction with fallback > flags an email the model invented and replaces it with the rules value 0ms
+ ✓ test/unit/extract.test.ts > extraction with fallback > flags a phone number that is not in the message 0ms
+ ✓ test/unit/extract.test.ts > extraction with fallback > keeps contact details that are in the message, normalised 0ms
+ ✓ test/unit/extract.test.ts > extraction with fallback > treats a copied but invalid address as no email, not as a hallucination 2ms
+ ✓ test/unit/extract.test.ts > extraction with fallback > sends unsure answers to review and fills gaps from the rules 1ms
+ ✓ test/unit/extract.test.ts > extraction with fallback > applies form fields over the model for who sent it 1ms
+ ✓ test/unit/extract.test.ts > routing policy > filters confident spam even when the message had parse problems 0ms
+ ✓ test/unit/extract.test.ts > routing policy > reviews unsure spam instead of dropping it 0ms
+ ✓ test/unit/extract.test.ts > routing policy > routes support, reviews parse warnings and leads without a usable email 0ms
+ ✓ test/unit/extract.test.ts > routing policy > marks high value leads 0ms
+ ✓ test/unit/extract.test.ts > routing policy > lists low confidence fields that have a value 0ms
+ ✓ test/integration/demo.test.ts > npm run demo > replays the 25 synthetic leads and every self check passes 2083ms
+ ✓ test/integration/entrypoints.test.ts > entrypoints in mock mode > npm run replay lists and replays the dead letter table 1597ms
+ ✓ test/integration/entrypoints.test.ts > entrypoints in mock mode > npm run ingest:eml parses a folder of .eml files 721ms
+
+ Test Files  18 passed (18)
+      Tests  160 passed (160)
+   Start at  13:40:31
+   Duration  4.70s (tests 50%, import 39%, transform 10%, worker 2%)
+
+ % Coverage report from v8
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   94.57 |    82.99 |    95.2 |   94.45 |                   
+ src               |   95.97 |    81.52 |   92.85 |   95.83 |                   
+  clock.ts         |   93.33 |      100 |   85.71 |   93.33 | 11                
+  config.ts        |     100 |    93.93 |     100 |     100 | 164               
+  logger.ts        |    97.5 |      100 |   91.66 |   97.43 | 35                
+  runtime.ts       |   92.98 |    53.12 |    90.9 |   92.98 | 80,207-208,232    
+ src/crm           |   95.89 |    66.66 |   97.29 |   95.08 |                   
+  hubspot.ts       |   95.89 |    66.66 |   97.29 |   95.08 | 49,96,146         
+ src/db            |   94.26 |    77.77 |     100 |   94.06 |                   
+  database.ts      |    91.3 |       75 |     100 |    90.9 | 73-74             
+  repository.ts    |   94.94 |    78.37 |     100 |   94.79 | 105,120-123,245   
+ src/domain        |     100 |    89.06 |     100 |     100 |                   
+  normalize.ts     |     100 |    89.06 |     100 |     100 | 32,105,111-118    
+ src/extraction    |   97.53 |    92.34 |     100 |   97.34 |                   
+  claude.ts        |   91.66 |    82.35 |     100 |    90.9 | 39,72             
+  extract.ts       |     100 |    98.27 |     100 |     100 | 116               
+  rules.ts         |   96.39 |    90.19 |     100 |      96 | 56,62,80,155      
+ src/http          |   99.02 |    82.19 |     100 |      99 |                   
+  server.ts        |   98.93 |    81.15 |     100 |   98.91 | 49                
+ src/mocks         |   86.07 |    71.37 |    92.2 |   85.75 |                   
+  ...ropic-mock.ts |   83.87 |    57.69 |   85.71 |   86.66 | 37-40,93          
+  default-mocks.ts |       0 |        0 |       0 |       0 | 18-33             
+  hubspot-mock.ts  |   94.11 |    80.62 |   97.91 |   94.17 | ...00,319,324,336 
+  load-mocks.ts    |       0 |        0 |       0 |       0 | 9-15              
+  mock-server.ts   |    87.5 |       60 |     100 |    87.5 | 17                
+  slack-mock.ts    |   84.78 |    66.03 |   94.11 |   83.72 | ...38,155,182-187 
+ src/pipeline      |   97.74 |    83.25 |     100 |    97.7 |                   
+  actions.ts       |   91.54 |    76.78 |     100 |   91.42 | ...-78,99-100,122 
+  crm-sync.ts      |   99.05 |    79.22 |     100 |   99.05 | 127               
+  digest.ts        |     100 |     87.5 |     100 |     100 | 25                
+  processor.ts     |   98.78 |    82.35 |     100 |   98.73 | 75                
+  reminders.ts     |     100 |    83.33 |     100 |     100 | 27                
+ src/reliability   |   98.28 |    95.93 |   97.43 |   98.78 |                   
+  errors.ts        |   98.21 |    95.31 |     100 |   98.14 | 35                
+  idempotency.ts   |     100 |    94.44 |     100 |     100 | 13                
+  job-queue.ts     |   96.87 |    91.66 |     100 |   96.87 | 35                
+  keyed-mutex.ts   |   94.44 |      100 |   83.33 |     100 |                   
+ src/scheduler     |   98.48 |    85.71 |   93.33 |   98.41 |                   
+  scheduler.ts     |   94.11 |      100 |      75 |   94.11 | 40                
+  time.ts          |     100 |    83.33 |     100 |     100 | 48-65             
+ src/slack         |   89.88 |    80.28 |   85.71 |   89.22 |                   
+  app.ts           |   78.84 |    67.56 |   66.66 |      78 | ...84,116,135-136 
+  blocks.ts        |     100 |    87.95 |     100 |     100 | ...47,162,182-187 
+  ...y-receiver.ts |      70 |       50 |   66.66 |   66.66 | 15-16,19          
+  notifier.ts      |   87.09 |       75 |     100 |   85.71 | 56,66,79,86       
+ src/sources       |   94.56 |     90.8 |    87.5 |    94.5 |                   
+  email.ts         |    90.9 |    87.27 |      80 |    90.9 | 16-17,51-52,67    
+  form.ts          |     100 |    96.42 |     100 |     100 | 39                
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 94.57% ( 1865/1972 )
+Branches     : 82.99% ( 1113/1341 )
+Functions    : 95.2% ( 417/438 )
+Lines        : 94.45% ( 1773/1877 )
+================================================================================

@@ -1,6 +1,6 @@
 import { ConfigError, loadConfig } from './config.ts';
 import { createLogger } from './logger.ts';
-import { startDefaultMocks } from './mocks/default-mocks.ts';
+import { loadDefaultMocks } from './mocks/load-mocks.ts';
 import { createRuntime } from './runtime.ts';
 import { createInMemoryReceiver } from './slack/in-memory-receiver.ts';
 import { nextDailyRun } from './scheduler/time.ts';
@@ -13,7 +13,7 @@ import { nextDailyRun } from './scheduler/time.ts';
 const main = async (): Promise<void> => {
   const config = loadConfig();
   const logger = createLogger({ level: config.logLevel });
-  const mocks = config.mode === 'mock' ? startDefaultMocks(logger, { allowRealClaude: config.ai.apiKey !== null }) : null;
+  const mocks = config.mode === 'mock' ? await loadDefaultMocks(logger, { allowRealClaude: config.ai.apiKey !== null }) : null;
   const runtime = createRuntime({ config, logger, ...(mocks ? { slackReceiver: createInMemoryReceiver() } : {}) });
   const { port } = await runtime.start();
   logger.info('server.started', {

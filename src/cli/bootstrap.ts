@@ -1,6 +1,7 @@
 import { loadConfig } from '../config.ts';
 import { createLogger } from '../logger.ts';
-import { startDefaultMocks, type DefaultMocks } from '../mocks/default-mocks.ts';
+import type { DefaultMocks } from '../mocks/default-mocks.ts';
+import { loadDefaultMocks } from '../mocks/load-mocks.ts';
 import { createRuntime, type Runtime } from '../runtime.ts';
 import { createInMemoryReceiver } from '../slack/in-memory-receiver.ts';
 
@@ -11,10 +12,10 @@ export interface CliContext {
 }
 
 /** Same wiring as the server, without listening on a port or opening a Slack socket. */
-export const bootstrapCli = (): CliContext => {
+export const bootstrapCli = async (): Promise<CliContext> => {
   const config = loadConfig();
   const logger = createLogger({ level: config.logLevel === 'info' ? 'warn' : config.logLevel });
-  const mocks = config.mode === 'mock' ? startDefaultMocks(logger, { allowRealClaude: config.ai.apiKey !== null }) : null;
+  const mocks = config.mode === 'mock' ? await loadDefaultMocks(logger, { allowRealClaude: config.ai.apiKey !== null }) : null;
   const runtime = createRuntime({ config, logger, slackReceiver: createInMemoryReceiver() });
   return {
     runtime,

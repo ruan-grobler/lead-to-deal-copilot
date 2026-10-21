@@ -1,0 +1,102 @@
+Lead to Deal Copilot: demo run
+==============================
+Synthetic data only. Northwind Managed IT is a fictional Cape Town IT services firm, and every
+person, company, email address (example.com) and phone number (+27 00) below is invented.
+Slack, HubSpot and Claude are mocked in-process with msw, so nothing leaves this machine.
+The Claude mock returns a canned answer per scenario. Everything around it is the real code:
+the HTTP webhooks, Bolt, the HubSpot and Anthropic SDKs, SQLite, retries and the dead letter replay.
+Scenario clock: Tue 20 Oct 2026 from 09:00 Africa/Johannesburg (fake). Real run: 2026-10-21T11:40:49.093Z, Node v24.13.1.
+Demo timings: AI timeout 800 ms (live 20 s). HubSpot backoff 40 ms base, 640 ms cap, 5 attempts
+(live 500 ms, 8 s, 6 attempts). Latencies are measured against local mocks, so real network and
+model time are not included.
+
+ #  Time   Source  Scenario                                       Result                                              ms
+ 1  09:00  form    F01 Kestrel Freight, clean form lead           auto drafted, new deal 3002                           59
+ 2  09:10  form    F02 Same form submission delivered again       replay blocked, already lead 1                         -
+ 3  09:20  email   E01 Noordhoek Brewing, email lead              auto drafted, new deal 3003                            7
+ 4  09:30  form    F03 Silvertree Dental Group, form lead         auto drafted, new deal 3004                            6
+ 5  09:40  form    F04 Atlantic Cold Chain, very high value       auto drafted, new deal 3005, HIGH VALUE                5
+ 6  09:50  form    F05 Junk test submission                       spam filtered, no CRM write                            1
+ 7  10:00  slack   S01 Winelands Agri Co-op, Slack shortcut       auto drafted, new deal 3006, HIGH VALUE                4
+ 8  10:10  form    F06 SEO spam                                   spam filtered, no CRM write                            1
+ 9  10:20  form    F07 Kestrel colleague, same company            merged into deal 3002 (company domain)                 6
+10  10:30  email   E02 Silvertree follow-up, same person          merged into deal 3004 (contact email)                  5
+11  10:40  form    F08 Bo-Kaap Coffee, Claude times out           human review: timeout                                809
+12  10:50  email   E03 Malformed email, broken From and MIME      human review: ungrounded + bad sender                  4
+13  11:00  form    F09 Tablebay Couriers, Claude 529 twice        human review: api error                               21
+14  11:10  email   E04 Phishing email                             spam filtered, no CRM write                            2
+15  11:20  form    F10 Home laptop repair, Claude unsure          human review: low confidence                           3
+16  11:30  form    F11 Sea Point Physio, already in HubSpot       auto drafted, new deal 3007, existing contact         10
+17  11:40  email   E05 Prompt injection attempt in spam           spam filtered, no CRM write                            2
+18  11:50  form    F12 Claremont Accounting, support request      support request, sent to #support                      3
+19  12:00  email   E06 Observatory Bike Co, invalid AI output     human review: invalid output                           3
+20  12:10  email   E07 Noordhoek email delivered twice            replay blocked, already lead 3                         -
+21  12:20  slack   S02 Same Slack message captured again          replay blocked, already lead 7                         -
+22  12:30  form    F13 Muizenberg Surf, HubSpot 429 storm         dead lettered after 5 attempts                       321
+23  12:40  form    F14 Stellenbosch Language Lab, 429s            dead lettered after 5 attempts                       132
+24  12:50  email   E08 Durbanville Vets, end of the storm         auto drafted after 2 retries, new deal 3008          124
+25  13:00  form    F15 Paarl Print Works, after the storm         auto drafted, new deal 3009                            9
+
+Dead letter replay (the same function npm run replay calls)
+  entry 1, lead 22: failed at hubspot.contacts.search (HTTP 429, 5 attempts), replay ok, drafted
+  entry 2, lead 23: failed at hubspot.contacts.search (HTTP 429, 5 attempts), replay ok, drafted
+
+Slack button clicks, sent through Bolt with an in-memory receiver
+  13:10  Amahle  approve      lead  1 Kestrel Freight            deal 3002 moved to qualifiedtobuy
+  13:10  Daniel  approve      lead  1 Kestrel Freight            refused: Lead 1 was already approved by U0AMAHLE.
+  13:10  Amahle  approve      lead  5 Atlantic Cold Chain        deal 3005 moved to qualifiedtobuy
+  13:10  Daniel  approve      lead  3 Noordhoek Brewing          deal 3003 moved to qualifiedtobuy
+  13:10  Daniel  approve      lead  7 Winelands Agri Co-op       deal 3006 moved to qualifiedtobuy
+  13:10  Daniel  assign to me lead  4 Silvertree Dental Group    assigned, HubSpot deal owner set to 7002
+  13:10  Amahle  approve      lead 11 Bo-Kaap Coffee Roasters    reviewed lead approved, contact, company and deal 3012 created in qualifiedtobuy
+  13:10  Daniel  not a fit    lead 15 Sam                        closed as not a fit, no CRM write (it was never drafted)
+
+Scheduled jobs
+  15:15  reminder sweep (threshold 120 min): 8 threaded reminders on untouched cards
+  15:15  same sweep again: 0 reminders (each card is reminded once)
+  Wed 07:59  digest due? no, not before 08:00 Africa/Johannesburg
+  Wed 08:00  digest posted to #sales: "Lead digest for Wed 21 Oct 2026: 22 received, 10 auto drafted, 5 needed review, 9 waiting for a decision."
+  Wed 08:00  second run the same day: skipped, already posted
+
+Summary
+  Inbound messages                       25  (15 web form, 8 email, 2 Slack shortcut)
+  Processed as unique leads              22
+  Replays blocked by idempotency key     3  (form retry, email redelivery, Slack shortcut clicked twice)
+  Deduplicated against HubSpot           3  (2 by contact email, 1 by company domain)
+    of which merged into an open deal    2  (note added, no second deal)
+  Auto drafted deals                     10
+  Sent to human review                   5
+  Spam filtered                          4
+  Support requests routed                1
+  AI fallback used                       5  (timeout 1, ungrounded 1, api error 1, low confidence 1, invalid output 1)
+  Claude API calls (mocked)              23
+  HubSpot 429 responses served           12
+  Retries scheduled (backoff + jitter)   11
+  Dead lettered                          2
+  Replayed from dead letter              2  (2 succeeded, 0 failed)
+  Deals created in HubSpot               11
+  Duplicate deals                        0
+  Leads lost                             0
+  Processing latency p50 / p95           5 ms / 321 ms  (pipeline time per unique lead, first pass)
+  Webhook response p50 / p95             6.9 ms / 12.1 ms  (time to the 202, 23 HTTP deliveries)
+  Slack messages                         16 in #sales, 10 thread replies, 1 in #support, 2 alerts in #sales-ops
+  Structured JSON log lines              138
+
+Self checks
+  [PASS] Every scenario ended as expected               25 of 25
+  [PASS] No lead lost                                   22 of 22 unique leads in a final state
+  [PASS] No duplicate deals                             11 deals for 11 drafted leads, 0 contacts with two open deals
+  [PASS] Dead letter table empty after replay           0 pending
+  [PASS] Slack clicks behaved, double approve refused   8 of 8
+  [PASS] Reminders sent once per card                   8 then 0
+  [PASS] Digest at 08:00 Africa/Johannesburg, once      07:59 skipped, 08:00 posted, rerun skipped
+
+Fallback reasons used in this run
+  timeout         the AI call timed out
+  ungrounded      the AI returned contact details that are not in the message
+  api_error       the AI service returned an error
+  low_confidence  the AI was not confident enough
+  invalid_output  the AI reply did not match the schema
+
+Sample structured log line
+  {"ts":"2026-10-20T07:00:00.000Z","level":"info","msg":"lead.processed","leadId":1,"key":"form:wf_10001","source":"form","status":"drafted","route":"auto_draft","latencyMs":59,"method":"ai","fallbackReason":null,"dedupeMatch":"none"}

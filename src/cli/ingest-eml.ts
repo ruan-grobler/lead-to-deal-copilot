@@ -14,7 +14,7 @@ const main = async (): Promise<void> => {
     throw new Error('Usage: npm run ingest:eml -- <folder with .eml files>');
   }
   const files = (await readdir(folder)).filter((name) => name.toLowerCase().endsWith('.eml')).sort();
-  const cli = bootstrapCli();
+  const cli = await bootstrapCli();
   try {
     print(`Ingesting ${String(files.length)} .eml file${files.length === 1 ? '' : 's'} from ${folder} (${cli.runtime.config.mode} mode)`);
     for (const file of files) {

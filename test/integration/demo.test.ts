@@ -28,6 +28,6 @@ describe('npm run demo', () => {
     const report = formatReport(result);
     expect(report).toContain('Synthetic data only');
     expect(report).toContain('[PASS] No duplicate deals');
-    expect(report).not.toMatch(/[–—]/);
+    expect(report).not.toMatch(/[\u2013\u2014]/);
   });
 });
