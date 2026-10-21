@@ -1,0 +1,42 @@
+{
+  "name": "lead-to-deal-copilot",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Inbound leads from a web form, email or Slack become clean, deduplicated HubSpot deals that a person approves in Slack with one click.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning --env-file-if-exists=.env src/main.ts",
+    "demo": "node --disable-warning=ExperimentalWarning demo/main.ts",
+    "replay": "node --disable-warning=ExperimentalWarning --env-file-if-exists=.env src/cli/replay.ts",
+    "ingest:eml": "node --disable-warning=ExperimentalWarning --env-file-if-exists=.env src/cli/ingest-eml.ts",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run lint && npm run typecheck && npm run test:coverage"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.131.0",
+    "@hubspot/api-client": "^14.0.1",
+    "@slack/bolt": "^5.1.0",
+    "@slack/types": "^3.2.0",
+    "@slack/web-api": "^8.2.0",
+    "postal-mime": "^4.0.4",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "@types/node": "^22.20.5",
+    "@vitest/coverage-v8": "^5.0.3",
+    "eslint": "^10.12.0",
+    "msw": "^2.15.0",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.71.1",
+    "vitest": "^5.0.3"
+  }
+}

@@ -1,0 +1,20 @@
+From: "Lerato Nkosi" <lerato[at]example.com>
+To: hello@northwind-it.example.com
+Subject: IT help for our new office
+Date: Tue, 20 Oct 2026 10:50:12 +0200
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="b1_broken"
+
+--b1_broken
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi there,
+
+We are moving 12 people into a new office in Woodstock next month and need =
+the network, Wi-Fi and printers set up, plus ongoing support after that.
+Please call me on 000 000 0007, my email bounces at the moment.
+
+Thanks,
+Lerato Nkosi
+--b1_brok

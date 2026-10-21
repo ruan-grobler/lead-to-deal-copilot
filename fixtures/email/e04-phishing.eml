@@ -1,0 +1,9 @@
+From: "IT Support Desk" <security-alert@mailbox-verify.example.com>
+To: hello@northwind-it.example.com
+Subject: Action required: your mailbox is almost full
+Date: Tue, 20 Oct 2026 11:12:55 +0200
+Message-ID: <alert-55812@mailbox-verify.example.com>
+MIME-Version: 1.0
+Content-Type: text/html; charset=utf-8
+
+<html><body><p>Dear user,</p><p>Your mailbox has reached 98% of its quota. Verify your password within 24 hours to avoid losing email.</p><p><a href="https://mailbox-verify.example.com/login">Verify now</a></p></body></html>
