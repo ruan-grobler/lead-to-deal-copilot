@@ -21,7 +21,7 @@ describe('budget parsing', () => {
     expect(findAnnualBudgetZar('about R150,000')).toBe(150_000);
     expect(findAnnualBudgetZar('R1,2m all in')).toBe(1_200_000);
     expect(findAnnualBudgetZar('ZAR 400 000')).toBe(400_000);
-    expect(findAnnualBudgetZar('R250k')).toBe(250_000);
+    expect(findAnnualBudgetZar('R350k')).toBe(350_000);
   });
 
   it('annualises monthly amounts and keeps the largest figure', () => {
@@ -34,8 +34,8 @@ describe('budget parsing', () => {
   it('maps amounts to bands', () => {
     expect(budgetBandFor(null)).toBe('unknown');
     expect(budgetBandFor(49_999)).toBe('under_50k');
-    expect(budgetBandFor(50_000)).toBe('50k_to_250k');
-    expect(budgetBandFor(250_000)).toBe('250k_to_1m');
+    expect(budgetBandFor(50_000)).toBe('50k_to_300k');
+    expect(budgetBandFor(300_000)).toBe('300k_to_1m');
     expect(budgetBandFor(1_000_000)).toBe('over_1m');
   });
 });
@@ -77,7 +77,7 @@ describe('extractWithRules', () => {
     expect(result.email).toEqual({ value: 'ayesha@bokaap-coffee.example.com', confidence: 0.95 });
     expect(result.company.value).toBe('Bo-Kaap Coffee Roasters');
     expect(result.phone.value).toBe('+27000000008');
-    expect(result.budgetBand.value).toBe('50k_to_250k');
+    expect(result.budgetBand.value).toBe('50k_to_300k');
     expect(result.intent.value).toBe('sales_lead');
     expect(result.need.value).toBe('We roast coffee and run an online shop with 18 staff.');
     expect(result.summary).toBe('Bo-Kaap Coffee Roasters: We roast coffee and run an online shop with 18 staff.');

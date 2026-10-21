@@ -5,37 +5,37 @@ person, company, email address (example.com) and phone number (+27 00) below is 
 Slack, HubSpot and Claude are mocked in-process with msw, so nothing leaves this machine.
 The Claude mock returns a canned answer per scenario. Everything around it is the real code:
 the HTTP webhooks, Bolt, the HubSpot and Anthropic SDKs, SQLite, retries and the dead letter replay.
-Scenario clock: Tue 20 Oct 2026 from 09:00 Africa/Johannesburg (fake). Real run: 2026-10-21T11:40:49.093Z, Node v24.13.1.
+Scenario clock: Tue 20 Oct 2026 from 09:00 Africa/Johannesburg (fake). Real run: 2026-10-21T19:52:17.145Z, Node v24.13.1.
 Demo timings: AI timeout 800 ms (live 20 s). HubSpot backoff 40 ms base, 640 ms cap, 5 attempts
 (live 500 ms, 8 s, 6 attempts). Latencies are measured against local mocks, so real network and
 model time are not included.
 
  #  Time   Source  Scenario                                       Result                                              ms
- 1  09:00  form    F01 Kestrel Freight, clean form lead           auto drafted, new deal 3002                           59
+ 1  09:00  form    F01 Kestrel Freight, clean form lead           auto drafted, new deal 3002                          258
  2  09:10  form    F02 Same form submission delivered again       replay blocked, already lead 1                         -
- 3  09:20  email   E01 Noordhoek Brewing, email lead              auto drafted, new deal 3003                            7
- 4  09:30  form    F03 Silvertree Dental Group, form lead         auto drafted, new deal 3004                            6
- 5  09:40  form    F04 Atlantic Cold Chain, very high value       auto drafted, new deal 3005, HIGH VALUE                5
- 6  09:50  form    F05 Junk test submission                       spam filtered, no CRM write                            1
- 7  10:00  slack   S01 Winelands Agri Co-op, Slack shortcut       auto drafted, new deal 3006, HIGH VALUE                4
- 8  10:10  form    F06 SEO spam                                   spam filtered, no CRM write                            1
- 9  10:20  form    F07 Kestrel colleague, same company            merged into deal 3002 (company domain)                 6
-10  10:30  email   E02 Silvertree follow-up, same person          merged into deal 3004 (contact email)                  5
-11  10:40  form    F08 Bo-Kaap Coffee, Claude times out           human review: timeout                                809
-12  10:50  email   E03 Malformed email, broken From and MIME      human review: ungrounded + bad sender                  4
+ 3  09:20  email   E01 Noordhoek Brewing, email lead              auto drafted, new deal 3003                           19
+ 4  09:30  form    F03 Silvertree Dental Group, form lead         auto drafted, new deal 3004                           11
+ 5  09:40  form    F04 Atlantic Cold Chain, very high value       auto drafted, new deal 3005, HIGH VALUE               19
+ 6  09:50  form    F05 Junk test submission                       spam filtered, no CRM write                            2
+ 7  10:00  slack   S01 Winelands Agri Co-op, Slack shortcut       auto drafted, new deal 3006, HIGH VALUE               13
+ 8  10:10  form    F06 SEO spam                                   spam filtered, no CRM write                            2
+ 9  10:20  form    F07 Kestrel colleague, same company            merged into deal 3002 (company domain)                62
+10  10:30  email   E02 Silvertree follow-up, same person          merged into deal 3004 (contact email)                 19
+11  10:40  form    F08 Bo-Kaap Coffee, Claude times out           human review: timeout                                831
+12  10:50  email   E03 Malformed email, broken From and MIME      human review: ungrounded + bad sender                  6
 13  11:00  form    F09 Tablebay Couriers, Claude 529 twice        human review: api error                               21
 14  11:10  email   E04 Phishing email                             spam filtered, no CRM write                            2
-15  11:20  form    F10 Home laptop repair, Claude unsure          human review: low confidence                           3
-16  11:30  form    F11 Sea Point Physio, already in HubSpot       auto drafted, new deal 3007, existing contact         10
+15  11:20  form    F10 Home laptop repair, Claude unsure          human review: low confidence                           4
+16  11:30  form    F11 Sea Point Physio, already in HubSpot       auto drafted, new deal 3007, existing contact         14
 17  11:40  email   E05 Prompt injection attempt in spam           spam filtered, no CRM write                            2
-18  11:50  form    F12 Claremont Accounting, support request      support request, sent to #support                      3
-19  12:00  email   E06 Observatory Bike Co, invalid AI output     human review: invalid output                           3
+18  11:50  form    F12 Claremont Accounting, support request      support request, sent to #support                      9
+19  12:00  email   E06 Observatory Bike Co, invalid AI output     human review: invalid output                           5
 20  12:10  email   E07 Noordhoek email delivered twice            replay blocked, already lead 3                         -
 21  12:20  slack   S02 Same Slack message captured again          replay blocked, already lead 7                         -
-22  12:30  form    F13 Muizenberg Surf, HubSpot 429 storm         dead lettered after 5 attempts                       321
-23  12:40  form    F14 Stellenbosch Language Lab, 429s            dead lettered after 5 attempts                       132
-24  12:50  email   E08 Durbanville Vets, end of the storm         auto drafted after 2 retries, new deal 3008          124
-25  13:00  form    F15 Paarl Print Works, after the storm         auto drafted, new deal 3009                            9
+22  12:30  form    F13 Muizenberg Surf, HubSpot 429 storm         dead lettered after 5 attempts                       318
+23  12:40  form    F14 Stellenbosch Language Lab, 429s            dead lettered after 5 attempts                       127
+24  12:50  email   E08 Durbanville Vets, end of the storm         auto drafted after 2 retries, new deal 3008          117
+25  13:00  form    F15 Paarl Print Works, after the storm         auto drafted, new deal 3009                           12
 
 Dead letter replay (the same function npm run replay calls)
   entry 1, lead 22: failed at hubspot.contacts.search (HTTP 429, 5 attempts), replay ok, drafted
@@ -77,8 +77,8 @@ Summary
   Deals created in HubSpot               11
   Duplicate deals                        0
   Leads lost                             0
-  Processing latency p50 / p95           5 ms / 321 ms  (pipeline time per unique lead, first pass)
-  Webhook response p50 / p95             6.9 ms / 12.1 ms  (time to the 202, 23 HTTP deliveries)
+  Processing latency p50 / p95           13 ms / 318 ms  (pipeline time per unique lead, first pass)
+  Webhook response p50 / p95             14.1 ms / 66.8 ms  (time to the 202, 23 HTTP deliveries)
   Slack messages                         16 in #sales, 10 thread replies, 1 in #support, 2 alerts in #sales-ops
   Structured JSON log lines              138
 
@@ -99,4 +99,4 @@ Fallback reasons used in this run
   invalid_output  the AI reply did not match the schema
 
 Sample structured log line
-  {"ts":"2026-10-20T07:00:00.000Z","level":"info","msg":"lead.processed","leadId":1,"key":"form:wf_10001","source":"form","status":"drafted","route":"auto_draft","latencyMs":59,"method":"ai","fallbackReason":null,"dedupeMatch":"none"}
+  {"ts":"2026-10-20T07:00:00.000Z","level":"info","msg":"lead.processed","leadId":1,"key":"form:wf_10001","source":"form","status":"drafted","route":"auto_draft","latencyMs":258,"method":"ai","fallbackReason":null,"dedupeMatch":"none"}

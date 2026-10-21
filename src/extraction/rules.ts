@@ -94,11 +94,11 @@ export const budgetBandFor = (annualZar: number | null): BudgetBand => {
   if (annualZar < 50_000) {
     return 'under_50k';
   }
-  if (annualZar < 250_000) {
-    return '50k_to_250k';
+  if (annualZar < 300_000) {
+    return '50k_to_300k';
   }
   if (annualZar < 1_000_000) {
-    return '250k_to_1m';
+    return '300k_to_1m';
   }
   return 'over_1m';
 };

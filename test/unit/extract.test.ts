@@ -142,8 +142,8 @@ describe('routing policy', () => {
 
   it('marks high value leads', () => {
     expect(isPriority(extraction({ budgetBand: { value: 'over_1m', confidence: 0.9 } }))).toBe(true);
-    expect(isPriority(extraction({ budgetBand: { value: '250k_to_1m', confidence: 0.9 }, urgency: { value: 'high', confidence: 0.9 } }))).toBe(true);
-    expect(isPriority(extraction({ budgetBand: { value: '250k_to_1m', confidence: 0.9 }, urgency: { value: 'low', confidence: 0.9 } }))).toBe(false);
+    expect(isPriority(extraction({ budgetBand: { value: '300k_to_1m', confidence: 0.9 }, urgency: { value: 'high', confidence: 0.9 } }))).toBe(true);
+    expect(isPriority(extraction({ budgetBand: { value: '300k_to_1m', confidence: 0.9 }, urgency: { value: 'low', confidence: 0.9 } }))).toBe(false);
     expect(isPriority(extraction({ budgetBand: { value: 'over_1m', confidence: 0.9 }, intent: { value: 'spam', confidence: 0.9 } }))).toBe(false);
   });
 

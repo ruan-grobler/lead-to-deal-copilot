@@ -86,7 +86,7 @@ The demo then clicks the Slack buttons through the real Bolt app, runs the dead 
   Replayed from dead letter              2  (2 succeeded, 0 failed)
   Duplicate deals                        0
   Leads lost                             0
-  Processing latency p50 / p95           5 ms / 321 ms  (pipeline time per unique lead, first pass)
+  Processing latency p50 / p95           13 ms / 318 ms  (pipeline time per unique lead, first pass)
 
   [PASS] Every scenario ended as expected               25 of 25
   [PASS] No duplicate deals                             11 deals for 11 drafted leads, 0 contacts with two open deals

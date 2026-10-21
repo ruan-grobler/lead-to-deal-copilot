@@ -3,8 +3,8 @@ import type { BudgetBand, Intent, Urgency } from '../extraction/schema.ts';
 
 export const BUDGET_LABELS: Record<BudgetBand, string> = {
   under_50k: 'Under R50k',
-  '50k_to_250k': 'R50k to R250k',
-  '250k_to_1m': 'R250k to R1m',
+  '50k_to_300k': 'R50k to R300k',
+  '300k_to_1m': 'R300k to R1m',
   over_1m: 'Over R1m',
   unknown: 'Not stated',
 };

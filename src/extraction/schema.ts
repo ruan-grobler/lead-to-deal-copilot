@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const INTENTS = ['sales_lead', 'support', 'spam'] as const;
-export const BUDGET_BANDS = ['under_50k', '50k_to_250k', '250k_to_1m', 'over_1m', 'unknown'] as const;
+export const BUDGET_BANDS = ['under_50k', '50k_to_300k', '300k_to_1m', 'over_1m', 'unknown'] as const;
 export const URGENCIES = ['high', 'medium', 'low', 'unknown'] as const;
 
 export type Intent = (typeof INTENTS)[number];

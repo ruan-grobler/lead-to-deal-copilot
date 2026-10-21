@@ -28,11 +28,11 @@ export const decideRoute = (decision: ExtractionDecision, lead: InboundLead, min
   return 'human_review';
 };
 
-/** High value: over R1m, or R250k to R1m with high urgency. */
+/** High value: over R1m, or R300k to R1m with high urgency. */
 export const isPriority = (extraction: LeadExtraction): boolean => {
   if (extraction.intent.value !== 'sales_lead') {
     return false;
   }
   const band = extraction.budgetBand.value;
-  return band === 'over_1m' || (band === '250k_to_1m' && extraction.urgency.value === 'high');
+  return band === 'over_1m' || (band === '300k_to_1m' && extraction.urgency.value === 'high');
 };

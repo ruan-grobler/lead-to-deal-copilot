@@ -31,7 +31,7 @@ export const extraction = (overrides: Partial<Record<'name' | 'company' | 'email
     email: field('email', ['test.person@test-company.example.com', 0.97]),
     phone: field('phone', [null, 0]),
     need: field('need', ['Managed IT support for 20 staff.', 0.9]),
-    budgetBand: overrides.budgetBand ?? { value: '50k_to_250k', confidence: 0.8 },
+    budgetBand: overrides.budgetBand ?? { value: '50k_to_300k', confidence: 0.8 },
     urgency: overrides.urgency ?? { value: 'medium', confidence: 0.8 },
     intent: overrides.intent ?? { value: 'sales_lead', confidence: 0.95 },
     summary: overrides.summary ?? 'Test Company wants managed IT support for 20 staff.',
