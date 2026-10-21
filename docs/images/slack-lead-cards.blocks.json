@@ -1,0 +1,202 @@
+{
+  "source": "npm run demo: the final Block Kit of two messages the app posted to the mocked Slack Web API (chat.postMessage, then chat.update after a click). Rendered to docs/images/slack-lead-cards.png.",
+  "messages": [
+    {
+      "note": "Muizenberg Surf School, lead 22: dead lettered in the HubSpot 429 storm, posted after the dead letter replay, no click yet",
+      "channel": "C0SALESXX",
+      "text": "New lead: Muizenberg Surf School. Muizenberg Surf School (8 staff) wants Microsoft 365, Wi-Fi and booking tablets, about R3k a month.",
+      "blocks": [
+        {
+          "type": "header",
+          "text": {
+            "type": "plain_text",
+            "text": "New lead: Muizenberg Surf School",
+            "emoji": true
+          }
+        },
+        {
+          "type": "section",
+          "text": {
+            "type": "mrkdwn",
+            "text": "Muizenberg Surf School (8 staff) wants Microsoft 365, Wi-Fi and booking tablets, about R3k a month."
+          }
+        },
+        {
+          "type": "section",
+          "fields": [
+            {
+              "type": "mrkdwn",
+              "text": "*Name*\nZanele Mthembu"
+            },
+            {
+              "type": "mrkdwn",
+              "text": "*Email*\nzanele@muizenberg-surf.example.com"
+            },
+            {
+              "type": "mrkdwn",
+              "text": "*Phone*\n+27 00 000 0013"
+            },
+            {
+              "type": "mrkdwn",
+              "text": "*Budget*\nUnder R50k"
+            },
+            {
+              "type": "mrkdwn",
+              "text": "*Urgency*\nNot stated"
+            },
+            {
+              "type": "mrkdwn",
+              "text": "*HubSpot*\nDeal 3010"
+            }
+          ]
+        },
+        {
+          "type": "context",
+          "elements": [
+            {
+              "type": "mrkdwn",
+              "text": "Extracted by Claude, sales lead 0.95. From website form. Lead 22."
+            }
+          ]
+        },
+        {
+          "type": "actions",
+          "block_id": "lead_actions_22",
+          "elements": [
+            {
+              "type": "button",
+              "action_id": "lead_approve",
+              "text": {
+                "type": "plain_text",
+                "text": "Approve",
+                "emoji": true
+              },
+              "style": "primary",
+              "value": "22"
+            },
+            {
+              "type": "button",
+              "action_id": "lead_assign",
+              "text": {
+                "type": "plain_text",
+                "text": "Assign to me",
+                "emoji": true
+              },
+              "value": "22"
+            },
+            {
+              "type": "button",
+              "action_id": "lead_not_a_fit",
+              "text": {
+                "type": "plain_text",
+                "text": "Not a fit",
+                "emoji": true
+              },
+              "style": "danger",
+              "value": "22",
+              "confirm": {
+                "title": {
+                  "type": "plain_text",
+                  "text": "Mark as not a fit?",
+                  "emoji": true
+                },
+                "text": {
+                  "type": "plain_text",
+                  "text": "The lead is closed and the deal, if there is one, moves to Closed lost.",
+                  "emoji": true
+                },
+                "confirm": {
+                  "type": "plain_text",
+                  "text": "Not a fit",
+                  "emoji": true
+                },
+                "deny": {
+                  "type": "plain_text",
+                  "text": "Cancel",
+                  "emoji": true
+                },
+                "style": "danger"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "note": "Atlantic Cold Chain, lead 5: after Approve",
+      "channel": "C0SALESXX",
+      "text": "High value lead: Atlantic Cold Chain. Atlantic Cold Chain (600 staff) needs managed security before an insurance renewal in 3 weeks, R2.4m a year approved.",
+      "blocks": [
+        {
+          "type": "header",
+          "text": {
+            "type": "plain_text",
+            "text": "High value lead: Atlantic Cold Chain",
+            "emoji": true
+          }
+        },
+        {
+          "type": "section",
+          "text": {
+            "type": "mrkdwn",
+            "text": ":rotating_light: <@U0AMAHLE> High value: budget Over R1m, urgency High."
+          }
+        },
+        {
+          "type": "section",
+          "text": {
+            "type": "mrkdwn",
+            "text": "Atlantic Cold Chain (600 staff) needs managed security before an insurance renewal in 3 weeks, R2.4m a year approved."
+          }
+        },
+        {
+          "type": "section",
+          "fields": [
+            {
+              "type": "mrkdwn",
+              "text": "*Name*\nNaledi Khumalo"
+            },
+            {
+              "type": "mrkdwn",
+              "text": "*Email*\nnaledi.khumalo@atlantic-coldchain.example.com"
+            },
+            {
+              "type": "mrkdwn",
+              "text": "*Phone*\n+27 00 000 0004"
+            },
+            {
+              "type": "mrkdwn",
+              "text": "*Budget*\nOver R1m"
+            },
+            {
+              "type": "mrkdwn",
+              "text": "*Urgency*\nHigh"
+            },
+            {
+              "type": "mrkdwn",
+              "text": "*HubSpot*\nDeal 3005"
+            }
+          ]
+        },
+        {
+          "type": "context",
+          "elements": [
+            {
+              "type": "mrkdwn",
+              "text": "Extracted by Claude, sales lead 0.98. From website form. Lead 5."
+            }
+          ]
+        },
+        {
+          "type": "context",
+          "elements": [
+            {
+              "type": "mrkdwn",
+              "text": "Approved by <@U0AMAHLE>. Deal is now in qualifiedtobuy."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "name": "lead-to-deal-copilot",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "description": "Inbound leads from a web form, email or Slack become clean, deduplicated HubSpot deals that a person approves in Slack with one click.",
   "license": "MIT",

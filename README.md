@@ -2,6 +2,30 @@
 
 Inbound leads from a web form, email or Slack become clean, deduplicated HubSpot deals, and a person approves them in Slack with one click.
 
+[![CI](https://github.com/ruan-grobler/lead-to-deal-copilot/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/ruan-grobler/lead-to-deal-copilot/actions/workflows/ci.yml)
+![Node 22.18+](https://img.shields.io/badge/node-22.18%2B-339933?logo=node.js&logoColor=white)
+![TypeScript strict](https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white)
+![Tests: 160 passing](https://img.shields.io/badge/tests-160%20passing-brightgreen)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+**The result.** 25 inbound messages became 15 Slack cards that each need one click. Through a HubSpot storm of 12 rate limit responses and 5 AI failures, **0 leads were lost and 0 duplicate deals were created**. Measured in the saved demo run, [`docs/demo-output.txt`](docs/demo-output.txt).
+
+![Two Slack lead cards. Left: New lead, Muizenberg Surf School, with name, email, phone, budget under R50k, HubSpot deal 3010, and Approve, Assign to me and Not a fit buttons. Right: High value lead, Atlantic Cold Chain, budget over R1m, the sales lead mentioned, HubSpot deal 3005, approved with one click and moved to qualifiedtobuy.](docs/images/slack-lead-cards.png)
+
+<sub>Two real cards from `npm run demo`, rendered from the Block Kit JSON the app posted to the mocked Slack API ([`slack-lead-cards.blocks.json`](docs/images/slack-lead-cards.blocks.json)) and captured with Playwright. The left lead was dead lettered in the 429 storm and posted after the replay.</sub>
+
+## Quickstart
+
+Needs Node 22.18 or newer. No accounts or keys: Slack, HubSpot and Claude are mocked in-process.
+
+```bash
+npm install
+npm run demo
+npm test
+```
+
+`npm run demo` replays 25 synthetic leads end to end and prints the report. `npm start` runs the real server in mock mode on `http://127.0.0.1:3000` with `/health`, `/webhooks/form` and `/webhooks/email`.
+
 All data in this repo is synthetic. Northwind Managed IT is a fictional IT services firm in Cape Town. Every person, company, email address (`example.com`) and phone number (`+27 00 ...`) is invented.
 
 ## The business problem
@@ -46,18 +70,6 @@ flowchart LR
 ```
 
 A scheduler posts a threaded reminder on any card nobody touched for 2 hours, and a digest to the sales channel at 08:00 Africa/Johannesburg.
-
-## Quickstart
-
-Needs Node 22.18 or newer. No accounts or keys: Slack, HubSpot and Claude are mocked in-process.
-
-```bash
-npm install
-npm run demo
-npm test
-```
-
-`npm run demo` replays 25 synthetic leads end to end and prints the report. `npm start` runs the real server in mock mode on `http://127.0.0.1:3000` with `/health`, `/webhooks/form` and `/webhooks/email`.
 
 ## What the demo covers
 
